@@ -17,3 +17,5 @@ longer time series estimation accuracy [3](https://www.mdpi.com/2227-7390/12/5/7
 * DMD Mode propagation:\
 Both continuous and discrete time propagations of the DMD modes can be made [4](https://arxiv.org/abs/2102.12086) whose predictivity can be visualised through graphing the evolution
 of each state variable. 
+
+The algorithm can be tested with the `test_data.csv` time series.
