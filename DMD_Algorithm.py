@@ -4,10 +4,16 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-data = '<insert data path>'
-
 # time-series used in data collection
 dt = 0.067
+
+# testing predictive power of DMD model
+start = 20
+steps = 70
+t_s = np.linspace(0,steps*dt,steps)
+
+# load the data (assumes format as each variable assigned to a column)
+data = (np.transpose(np.genfromtxt('<insert data path>', skip_header=True, delimiter=',', dtype='float')))[:,start:]
 
 def PCA(M):
 # Centering the data
@@ -19,10 +25,11 @@ def PCA(M):
     return W
 
 # transforming to the optimal basis where Covariance matrix is diagonal
-data = np.dot(PCA(data),data)
+W = PCA(data)
+data = np.dot(W.T,data)
 
 # Hankel DMD for spatially undersampled data (delay embeddings), s<=n
-s = 15
+s = 50
 m, n = data.shape
 print(f'\nDimensions of Data matrix: {m}x{n}')
 
@@ -88,28 +95,22 @@ def eig_disc(k):
 # select only first 5 entries of array - reduce down to 5-dim state space
     return np.round(x[:,:m],3)
 
-# testing predictive power of DMD model
-start = 0
-steps = 30
-end = steps*dt
-t_s = np.linspace(start,end,steps)
-
 discrete_prediction = np.empty((0,m))
 continuous_prediction = np.empty((0,m))
-actual = (data.T)[:steps,:]
+actual = (data.T)[0:steps,:]
 
 for index, value in enumerate(t_s):
     discrete_prediction = np.vstack((discrete_prediction, eig_disc(index)))
     continuous_prediction = np.vstack((continuous_prediction, eig_cont(value)))
 
-print(np.round(b[:m,0],3))
+print(np.round(b[:m, 0], 3))
 print(discrete_prediction[0,:])
 print(continuous_prediction[0,:])
 print(actual[0,:])
 
 # plotting the time evolution & absolute error evolution
 for i in range(m):
-    index = range(len(t_s))
+    index = [x + start for x in range(len(t_s))]
     plt.plot(index, discrete_prediction[:,i], '-r', label=f'Discrete Prediction Variable {i+1}')
     plt.plot(index, continuous_prediction[:,i], '-b', label=f'Continuous Prediction Variable {i+1}')
     plt.plot(index, actual[:,i], '-k', label=f'Actual Variable {i+1}')
