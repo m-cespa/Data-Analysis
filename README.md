@@ -18,4 +18,4 @@ longer time series estimation accuracy [3](https://www.mdpi.com/2227-7390/12/5/7
 Both continuous and discrete time propagations of the DMD modes can be made [4](https://arxiv.org/abs/2102.12086) whose predictivity can be visualised through graphing the evolution
 of each state variable. 
 
-The algorithm can be tested with the `test_data.csv` time series.
+The algorithm can be tested with the `test_data.csv` time series (the results for Hankel s=50 are shown in the attached jpegs)
