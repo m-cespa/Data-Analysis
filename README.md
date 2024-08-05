@@ -1,4 +1,4 @@
-This script utilises several data algorithms to robustly form data driven predictions using Dynamic Mode Decomposition (DMD):
+The scripts shown include various data algorithms which can used in sequence to undergo a Dynamic Mode Decomposition (DMD) on a given time series dataset:
 
 The standard DMD algorithm aims to construct a least squares estimate of a finite dimensional Koopman Operator whose eigenvectors (the DMD modes) which are temporally invariant,
 can be extracted and used to propagate the state through time. The script utilises several algorithms to accomplish this:
